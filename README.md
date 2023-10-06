@@ -25,6 +25,7 @@ Jika sudah selesai akses alamat berikut melalui browser
 ```sh
 http://localhost:{NGINX_PORT}
 ```
+![image](https://github.com/rizki182/eigen-rizki/assets/6510392/52ee8bb9-6fde-4104-ad40-1bc8c4488ee1)
 
 ## Troubleshoot
 Jika proses deploy atau install dependencies gagal tambahkan atau edit file **/etc/docker/daemon.json**
