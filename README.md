@@ -5,28 +5,24 @@
 git clone https://github.com/rizki182/eigen-rizki.git
 ```
 
-**Masuk ke folder docker**
+**Masuk ke folder project**
 ```sh
-cd eigen-rizki/docker
+cd eigen-rizki
 ```
+**Konfigurasi awal**
 
+Buka file **.env** lalu saisuaikan isi **NGINX_PORT** dengan port yang belum dipakai
 **Deploy**
 ```sh
-docker compose up -d
+docker compose up
 ```
-**Install dependencies**<br />
-Setelah proses deploy selesai, sebelum dapat digunakan aplikasi akan menginstall dependencies secara otomatis. Untuk melihat proses install jalankan perintah berikut untuk menampilkan logs
+Setelah perintah di eksekusi tunggu hinggal proses deployment selesai. Jika log menampilkan teks berikut aplikasi sudah dapat digunakan
 ```sh
-docker logs -f eigen-rizki-php
-```
-Jika logs menampilkan teks berikut aplikasi sudah dapat digunakan
-```sh
-NOTICE: fpm is running, pid 275
 NOTICE: ready to handle connections
 ```
-Setelah proses install dependencies selesai akses url berikut melalui browser.li sampai aplikasi bisa diakses
+Jika sudah selesai akses alamat berikut melalui browser
 ```sh
-http://localhost:9090
+http://localhost:{NGINX_PORT}
 ```
 
 ## Troubleshoot
