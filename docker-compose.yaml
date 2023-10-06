@@ -5,8 +5,6 @@ services:
     image: nginx:1.21.5
     container_name: eigen-rizki-nginx
     restart: unless-stopped
-    depends_on:
-      - php
     ports:
       - ${NGINX_PORT}:7000
     volumes:
@@ -36,8 +34,6 @@ services:
     container_name: eigen-rizki-php
     restart: unless-stopped
     working_dir: /var/www/html
-    depends_on:
-      - postgres
     volumes:
       - ./src/be:/var/www/html/be
       - ./src/fe:/var/www/html/fe
@@ -45,7 +41,7 @@ services:
       - ./configs/phpcomposer/workers.conf:/etc/supervisor/conf.d/workers.conf
     command: >
       sh -c "cd fe &&
-             cd npm run build &&
+             npm run build &&
              cd ../be &&
              composer install &&
              chmod -R 777 storage/logs/ &&
