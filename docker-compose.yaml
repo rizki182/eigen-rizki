@@ -1,0 +1,62 @@
+version: '3.3'
+services:
+
+  nginx:
+    image: nginx:1.21.5
+    container_name: eigen-rizki-nginx
+    restart: unless-stopped
+    depends_on:
+      - php
+    ports:
+      - ${NGINX_PORT}:7000
+    volumes:
+      - ./src/be:/var/www/html/be
+      - ./src/fe:/var/www/html/fe
+      - ./configs/nginx/site.conf:/etc/nginx/conf.d/default.conf
+    links:
+      - php
+
+  postgres:
+    image: postgres:13.0 
+    container_name: eigen-rizki-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_MULTIPLE_DATABASES: db_project_rizki,db_project_rizki_test
+    volumes:
+      - ./configs/postgres/initdb.d:/docker-entrypoint-initdb.d
+      - ./volumes/data:/var/lib/postgresql/data
+
+  php:
+    build:
+      context: .
+      dockerfile: ./images/php/Dockerfile
+    image: phpcomposer:eigen
+    container_name: eigen-rizki-php
+    restart: unless-stopped
+    working_dir: /var/www/html
+    depends_on:
+      - postgres
+    volumes:
+      - ./src/be:/var/www/html/be
+      - ./src/fe:/var/www/html/fe
+      - ./configs/phpcomposer/php.ini:/usr/local/etc/php/php.ini
+      - ./configs/phpcomposer/workers.conf:/etc/supervisor/conf.d/workers.conf
+    command: >
+      sh -c "cd be &&
+             composer install &&
+             chmod -R 777 storage/logs/ &&
+             chmod -R 777 storage/framework/sessions/ &&
+             chmod -R 777 storage/framework/views/ &&
+             chmod -R 777 storage/framework/cache/ &&
+             chmod -R 777 storage/app/public/ &&
+             php artisan route:clear &&
+             php artisan cache:clear &&
+             php artisan config:clear &&
+             php artisan view:clear &&
+             php artisan view:clear &&
+             php artisan key:generate &&
+             php artisan migrate &&
+             php artisan db:seed &&
+             php-fpm"

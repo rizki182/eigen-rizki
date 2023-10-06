@@ -1,0 +1,6 @@
+#!/bin/bash
+
+php /var/www/html/be/artisan config:cache --env=test
+php /var/www/html/be/artisan migrate:fresh --seed
+php /var/www/html/be/artisan test
+php /var/www/html/be/artisan config:cache
