@@ -41,6 +41,7 @@ services:
       - ./configs/phpcomposer/workers.conf:/etc/supervisor/conf.d/workers.conf
     command: >
       sh -c "cd fe &&
+             npm install &&
              npm run build &&
              cd ../be &&
              composer install &&
