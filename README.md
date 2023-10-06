@@ -12,11 +12,12 @@ cd eigen-rizki
 **Konfigurasi awal**
 
 Buka file **.env** lalu saisuaikan isi **NGINX_PORT** dengan port yang belum dipakai
+
 **Deploy**
 ```sh
 docker compose up
 ```
-Setelah perintah di eksekusi tunggu hinggal proses deployment selesai. Jika log menampilkan teks berikut aplikasi sudah dapat digunakan
+Tunggu hingga proses deployment selesai. Jika log menampilkan teks berikut aplikasi sudah dapat digunakan
 ```sh
 NOTICE: ready to handle connections
 ```
