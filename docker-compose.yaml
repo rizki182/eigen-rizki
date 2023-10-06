@@ -44,7 +44,9 @@ services:
       - ./configs/phpcomposer/php.ini:/usr/local/etc/php/php.ini
       - ./configs/phpcomposer/workers.conf:/etc/supervisor/conf.d/workers.conf
     command: >
-      sh -c "cd be &&
+      sh -c "cd fe &&
+             cd npm run build &&
+             cd ../be &&
              composer install &&
              chmod -R 777 storage/logs/ &&
              chmod -R 777 storage/framework/sessions/ &&
